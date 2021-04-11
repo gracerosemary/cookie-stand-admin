@@ -1,23 +1,22 @@
-# Next.js + Tailwind CSS Example
+# Cookie Stand
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) (v2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+PR Link: https://github.com/gracerosemary/cookie-stand-admin/pull/1  
 
-It uses the new [`@tailwindcss/jit`](https://github.com/tailwindlabs/tailwindcss-jit) engine for Tailwind CSS.
+**Author**: G Choi  
+**Version**: 1.0.0  
 
-## Deploy your own
+## Overview
+Replicate sample image in a React project that uses Tailwinds CSS. Make sure you have a head, header, main, form, and footer component that matches the spec of the sample image. 
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+## Getting Started
+Create new React/Tailwinds project via CLI command:
+`npx create-next-app –example with-tailwindcss cookie-stand-admin`
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Architecture
+NPM, React, Tailwinds
 
-## How to use
+## API
+Input location and cookie details to see a JSON string returned below the form. 
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Change Log
+04-08-2021 10:37pm - Finished lab
