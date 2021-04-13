@@ -100,6 +100,9 @@ function CookieForm(props){
 }
 
 function ReportTable(props){
+  if (totalLength == 0) {
+    return (<p className="text-center flex justify-center">No Cookie Stands Available</p>)
+  }
   return(
     <div className="mb-12 text-center flex justify-center">
       <table className="table-fixed">
