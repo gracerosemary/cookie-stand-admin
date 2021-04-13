@@ -1,108 +1,146 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import { useState } from 'react'
+import { hours } from '../data'
 
 export default function Home() {
 
-  const [location, setLocation] = useState('location')
-  const [min, setMin] = useState('min')
-  const [max, setMax] = useState('max')
-  const [average, setAverage] = useState('average')
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const hourlySales = [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36]
+  const totalSales = hourlySales.reduce((acc, hour) => acc = acc + hour, 0)
+  const totalLength = answeredQuestions.length
 
-  function standHandler(event){
+  function onCreate(event){
     event.preventDefault()
-    // alert(event.target.create.value)
-    setLocation(event.target.location.value)
-    setMin(event.target.min.value)
-    setMax(event.target.max.value)
-    setAverage(event.target.average.value)
+    const answeredQuestion = {
+      location: event.target.location.value,
+      min: event.target.min.value,
+      max: event.target.max.value, 
+      average: event.target.average.value,
+    }
+    setAnsweredQuestions([...answeredQuestions, answeredQuestion])
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-green-50">
-      
+    <div className="bg-green-50 flex flex-col items-center justify-center">
       <Head>
         <title>Cookie Stand Admin</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Header title="Cookie Stand Admin" />
-
-      <main className="flex items-center justify-center flex-1">
-
-      <div className="flex">
-        <form onSubmit={standHandler} className="bg-green-300 rounded-lg">
-            <div className="grid place-items-center p-2">
-              <p className="text-2xl text-center p-4">Create Cookie Stand</p>
-            </div>
-
-            <div className="flex p-2">
-              <label className="text-left p-2">
-                Location  
-                <input name="location" className="flex-1 px-96 ml-2" placeholder="Barcelona"></input>
-              </label>
-            </div>
-
-          <div className="p-4 flex space-x-4">
-
-            <div className="p-1 flex-1 text-center">
-              <label className="">
-                Minimum Customers per Hour
-                <br />
-                <input name="min" className="px-4"></input>
-              </label>
-            </div>
-
-            <div className="p-1 flex-1 text-center">
-              <label>
-                Maximum Customers per Hour
-                <br />
-                <input name="max" className="px-4"></input>
-              </label>
-            </div>
-
-            <div className="p-1 flex-1 text-center">
-              <label>
-                Average Cookies per Sale
-                <br />
-                <input name="average" className="px-4"></input>
-              </label>
-            </div>
-
-            <div className="p-1 flex-1 text-center">
-              <button className="px-12 py-4 bg-green-500">Create</button>
-            </div>
-
-          </div>
-        </form>
-      </div>
-
+      <Header title="Cookie Stand Admin" answeredQuestionsArray = {answeredQuestions}/>
+      <main className="">
+        <CookieForm />
+        <ReportTable answeredQuestionsArray = {answeredQuestions}/>
       </main>
-
-        <div className="text-center">
-          <div className="p-4">
-            <p className="text-gray-600">Report Table Coming Soon...</p>
-          </div>
-
-          <div className="p-4 mb-4">
-            <p className="text-gray-600 text-lg">{"{"}"location" : "{location}", "minCustomers" : {min}, "maxCustomers" : {max}, "avgCookies" : {average}{"}"}</p>
-          </div>
-        </div>
-
-      <footer className="p-4 flex items-center w-full h-14 border-t bg-green-500 mb-6">
-          ©2021
-      </footer>
-
+      <Footer />
     </div>
   )
 function Header(props){
   return(
-    <header className="p-4 text-4xl w-full bg-green-500">
-        <h1>{props.title}</h1>
+    <header className="p-3 w-full bg-green-500 my-0">
+        <div className="flex items-center justify-between">
+          <h1 className="text-4xl">{props.title}</h1>
+          <div className="bg-gray-50 p-1 rounded-md">
+            <Link href="/overview">
+              <a>Overview</a>
+            </Link>
+          </div>
+        </div>
     </header>
   )
 }
 
+function CookieForm(props){
+  return(
+    <div className="flex justify-center bg-green-50 mt-8 mb-8">
+      <form onSubmit={onCreate} className="bg-green-300 rounded-lg">
+        <div className="">
+          <p className="text-2xl text-center p-4">Create Cookie Stand</p>
+        </div>
 
+        <div className="flex p-2 text-left">
+          <label className="p-2">
+            Location  
+            <input name="location" className="flex-1 px-96 ml-2"></input>
+          </label>
+        </div>
+
+      <div className="p-4 flex space-x-4">
+        <div className="p-1 flex-1 text-center bg-green-200 rounded-md">
+          <label className="">
+            Minimum Customers per Hour
+            <br />
+            <input name="min" className="px-4"></input>
+          </label>
+        </div>
+
+        <div className="p-1 flex-1 text-center bg-green-200 rounded-md">
+          <label>
+            Maximum Customers per Hour
+            <br />
+            <input name="max" className="px-4"></input>
+          </label>
+        </div>
+
+        <div className="p-1 flex-1 text-center bg-green-200 rounded-md">
+          <label>
+            Average Cookies per Sale
+            <br />
+            <input name="average" className="px-4"></input>
+          </label>
+        </div>
+
+        <div className="p-1 flex-1 text-center">
+          <button className="px-24 py-4 bg-green-500 rounded-md">Create</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  )
+}
+
+function ReportTable(props){
+  if (totalLength == 0) {
+    return (<p className="text-center flex justify-center">No Cookie Stands Available</p>)
+  }
+  return(
+    <div className="mb-12 text-center flex justify-center">
+      <table className="table-fixed">
+        <thead className="">
+            <tr className=" bg-green-500">
+              <th className="px-6">Location</th>
+              {hours.map(hour => (<th className="px-3">{hour}</th>))}
+              <th className="px-4">Totals</th>
+            </tr>
+        </thead>
+        <tbody className="bg-green-300 ">
+          {props.answeredQuestionsArray.map(item =>(
+            <tr className="odd:bg-green-400">
+              <td className="border border-gray-500">{item.location}</td>
+              {hourlySales.map(sales => (<td className="border border-gray-500">{sales}</td>))}
+              <td className="border border-gray-500">{totalSales}</td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot className="bg-green-500">
+          <tr className="font-bold">
+            <td >Totals</td>
+            {hourlySales.map(sales => (<td>{sales * totalLength}</td>))}
+            <td>{totalSales * totalLength}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  )
+}
+
+function Footer(props){
+  return( 
+      <footer className="bg-green-500 w-full border-t text-xl h-screen">
+        <p className="p-3">{totalLength} Locations World Wide </p>
+      </footer>
+  )
+}
 }
 
 
