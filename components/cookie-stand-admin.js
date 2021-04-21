@@ -51,12 +51,14 @@ export default function CookieStandAdmin({token, onLogout, username}) {
 
     return (
         <div className="bg-green-50 flex flex-col items-center justify-center">
+        {/* <div className="bg-green-50 flex flex-col justify-between h-screen"> */}
             <Head>
             <title>Cookie Stand Admin</title>
             <link rel="icon" href="/favicon.ico" />
             </Head>
             <CookieStandHeader username={username} onLogout={onLogout}/>
 
+            {/* <main className="flex-1 w-5/6 mx-auto"> */}
             <main className="">
                 <CookieStandForm onCreate={createHandler}/>
                 <CookieStandTable stands={cookieStands} onDelete={deleteHandler} />
